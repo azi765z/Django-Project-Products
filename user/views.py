@@ -1,6 +1,6 @@
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.generics import CreateAPIView,ListAPIView
+from rest_framework.generics import CreateAPIView,ListAPIView,UpdateAPIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializer import UserSerializer, LoginSerializer,UserViewserializer,UserRoleChangeSerializer
@@ -15,7 +15,7 @@ class UserListView(ListAPIView):
     serializer_class = UserViewserializer
     permission_classes = [ IsAdminRole]
     
-class UserRoleChangeView(CreateAPIView):
+class UserRoleChangeView(UpdateAPIView):
     queryset = UserModel.objects.all()
     serializer_class = UserRoleChangeSerializer
     permission_classes = [IsAdminRole]
