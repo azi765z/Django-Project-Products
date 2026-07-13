@@ -7,33 +7,33 @@ User=get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model=UserModel
-        fields=["id","username",'password']
+        model = UserModel
+        fields = ["id","username",'password']
         
-    def create(self, validated_data):
-        user=User.objects.create_user(**validated_data)
+    def create(self,validated_data):
+        user = User.objects.create_user(**validated_data)
         return user
     
 class LoginSerializer(serializers.Serializer):
-    username=serializers.CharField()
-    password=serializers.CharField(write_only=True)
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True)
     
     def validate(self, attrs):
-        user=authenticate(
-            username=attrs["username"],
-            password=attrs["password"]
+        user = authenticate(
+            username = attrs["😎username"],
+            password = attrs["🔑password"]
         )
         if not user:
-            raise serializers.ValidationError("username yoki parol xato")
+            raise serializers.ValidationError("username yoki parol xato❌")
         attrs["user"] = user
         return attrs
     
 class UserRoleChangeSerializer(serializers.ModelSerializer):
     class Meta:
-        model=UserModel
-        fields=["id","role"]
+        model = UserModel
+        fields = ["id","role"]
         
 class UserViewserializer(serializers.ModelSerializer):
     class Meta:
-        model=UserModel
-        fields=["id","username","role"]
+        model = UserModel
+        fields = ["id","role",'username']

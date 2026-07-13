@@ -1,4 +1,4 @@
-from rest_framework import status
+from rest_framework import status,generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.generics import CreateAPIView,ListAPIView,UpdateAPIView
 from rest_framework.response import Response
@@ -42,16 +42,20 @@ class LoginView(CreateAPIView):
                 "refresh": str(refresh),
                 "access": str(refresh.access_token),
             },
-            status=status.HTTP_200_OK
-        )
+                     status=status.HTTP_200_OK)
 
 class MyProduct(ListAPIView):
     serializer_class=ProductsSerializer
     permission_classes=(IsAuthenticated)
     
     def get_queryset(self):
-        return ProductModel.objects.filter(user=self.request.user)
+        return ProductModel.objects.filter(user=self.request.user)  
     
     
+class ProfileView(generics.RetrieveAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
 
-        
+    def get_object(self):
+        return self.request.user
+    
